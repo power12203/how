@@ -1,6 +1,7 @@
 export const LOGIN = "auth/LOGIN";
 export const LOGIN_REGISTER = "auth/LOGIN_REGISTER";
 export const CHANGE_STATUS = "auth/CHANGE_STATUS";
+const LOG_OUT = "auth/LOG_OUT";
 ////
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
@@ -15,6 +16,7 @@ export const register = (name, password) => ({
   password,
 });
 export const changeStatus = (status) => ({ type: CHANGE_STATUS, status });
+export const logout = (loginState) => ({ type: LOG_OUT, loginState });
 
 const userData = []; // 전역 변수
 
@@ -30,6 +32,7 @@ const initialState = {
 
   status: "",
   user: "",
+  loginState: false,
 };
 
 //스테이트 갖있는값,액션은 동작에따른값
@@ -55,6 +58,12 @@ export const auth = (state = initialState, action) => {
       return {
         ...state,
         status: action.status,
+      };
+    case LOG_OUT:
+      return {
+        ...state,
+        loginState: action.loginState,
+        user: action.user,
       };
     case LOGIN_REGISTER:
       const existingUser = userData.find(

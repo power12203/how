@@ -1,13 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
 import Responsive from "../../libs/common/Responsive";
 import styled, { css } from "styled-components";
-import palette from "../../libs/styles/palette";
+
 import PostItem from "./PostItem";
 import Button from "../../libs/common/Button";
 import { postData } from "../../libs/data/postData";
 import { bring_post } from "../../modules/post";
 import { useDispatch } from "react-redux";
+import { auth } from "../../modules/auth";
+import { useSearchParams } from "react-router-dom";
 
 const PostListDiv = styled(Responsive)`
   margin-top: 3rem;
@@ -20,9 +22,14 @@ const WriteLinkDiv = styled.div`
   margin-bottom: 3rem;
 `;
 
-const PostList = ({ data }) => {
-  const { id, username, title, content, tags } = data;
-  console.log(id);
+const PostList = (props) => {
+  // const { id, username, title, content, tags } = data;
+  const { auth, postData, bring_post, showItemNum, currentPosts } = props;
+  console.log(currentPosts);
+  const [searchParams] = useSearchParams();
+  const page = Number(searchParams.get("page"));
+
+  // console.log(id);
   const dispatch = useDispatch();
   const onClick = (id) => {
     const post = postData.filter((item) => item.id === id);
@@ -35,6 +42,13 @@ const PostList = ({ data }) => {
         post && post[0].tags
       )
     );
+    if (!auth) {
+      return (
+        <PostListDiv>
+          <h1>로그인후 이용가능합니다.</h1>
+        </PostListDiv>
+      );
+    }
   };
 
   return (
@@ -52,8 +66,10 @@ const PostList = ({ data }) => {
           새글 등록
         </Button>
       </WriteLinkDiv>
-      {postData &&
-        postData.map((item) => <PostItem item={item} onClick={onClick} />)}
+      {currentPosts &&
+        currentPosts.map((item, idx) => (
+          <PostItem item={item} onClick={onClick} />
+        ))}
     </PostListDiv>
   );
 };

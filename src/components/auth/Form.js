@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../libs/common/Button";
 import { Link, useNavigate } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import palette from "../../libs/styles/palette";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
@@ -13,6 +13,7 @@ import {
   register,
   changeStatus,
   NORMAL,
+  logout,
 } from "../../modules/auth";
 
 const FormDiv = styled.div`
@@ -59,7 +60,7 @@ const textType = {
   register: "회원 가입",
 };
 const Form = ({ mode, status, user }) => {
-  console.log(user); //
+  // console.log(user); //
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -96,6 +97,7 @@ const Form = ({ mode, status, user }) => {
         setError("비밀번호가 일치하지 않습니다.");
         return;
       }
+      alert(e.target.username.value + "님, 회원가입에 성공하셨습니다.");
 
       dispatch(register(username, password));
     } else {

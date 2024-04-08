@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import Form from "./Form";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../modules/auth";
 
 const Login = ({ mode }) => {

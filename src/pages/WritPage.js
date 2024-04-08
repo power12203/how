@@ -25,6 +25,7 @@ const WritPage = () => {
   const postData = (id, title, content, tags) =>
     dispatch(post_data(id, title, content, tags));
   const initial = () => dispatch(initialize());
+  console.log(initial);
   const changeContent = (content) => dispatch(change_content(content));
   const changeTitle = (title) => dispatch(change_title(title));
   const changeTags = (tags) => dispatch(change_tags(tags));

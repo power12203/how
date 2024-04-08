@@ -1,15 +1,40 @@
 import React from "react";
-import Button from "../../libs/common/Button";
+// import Button from "../../libs/common/Button";
 import styled from "styled-components";
+import palette from "../../libs/styles/palette";
+import { Link } from "react-router-dom";
 
-const ActionButton = styled.button``;
+const PostActionDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+  margin-top: -1.5rem;
+`;
+const ActionButton = styled.button`
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  color: ${palette.Red[3]};
+  font-weight: bold;
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  &:hover {
+    background: ${palette.Orange[1]};
+    color: ${palette.Orange[7]};
+  }
+  & + & {
+    margin-left: 0.25rem;
+  }
+`;
 
-const PostActionButton = () => {
+const PostActionButton = (props) => {
+  const { onClick } = props;
   return (
-    <div>
-      <Button Indigo>수정</Button>
-      <Button Indigo>삭제</Button>
-    </div>
+    <PostActionDiv>
+      <ActionButton onClick={onClick}>수정</ActionButton>
+      <ActionButton>삭제</ActionButton>
+    </PostActionDiv>
   );
 };
 

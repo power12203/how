@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import palette from "../../libs/styles/palette";
 import { Link } from "react-router-dom";
 import Tags from "../common/Tags";
+import { useSelector } from "react-redux";
 
 const PostItemDiv = styled.div`
   padding-top: 3rem;
@@ -42,14 +43,16 @@ const SubInfoDiv = styled.div`
 `;
 
 const PostItem = (props) => {
-  const { item, onClick } = props;
-  console.log(item);
+  const { item } = props;
+  const { user } = useSelector((state) => state.auth);
+  // console.log(item);
   return (
     <div>
       <PostItemDiv>
-        <h2>
+        <h2 style={{ color: "black" }}>
           <Link
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", color: "black" }}
+            // onClick={() => onclick(item.id)}
             to={`/${item.username}/${item.id}`}
           >
             {item.title}
@@ -59,7 +62,7 @@ const PostItem = (props) => {
           <span>
             <b>
               <Link style={{ textDecoration: "none" }} to="/username">
-                {item.username}
+                {user.username}
               </Link>
             </b>
           </span>

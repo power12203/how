@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./Button";
 import Responsive from "./Responsive";
-
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../modules/auth";
 const HeaderDiv = styled(Responsive)`
   z-index: 1000;
   position: fixed;
@@ -37,6 +37,14 @@ const UserDiv = styled.div`
 `;
 
 const Header = () => {
+  const { user, loginState } = useSelector((state) => state.auth);
+  // console.log(user.username);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    // 로그아웃 액션 디스패치
+    dispatch(logout(false));
+  };
   return (
     <>
       <HeaderDiv>
@@ -63,18 +71,8 @@ const Header = () => {
             }}
           >
             <div className="right">
-              <UserDiv></UserDiv>
-              <Button
-                style={{
-                  display: "flex",
-                  height: "42px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                to="/write"
-              >
-                글쓰기
-              </Button>
+              <UserDiv>{user.username}</UserDiv>
+              <Button onClick={handleLogout}>로그아웃</Button>
             </div>
             <div className="right">
               <Button

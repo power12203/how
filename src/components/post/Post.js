@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import palette from "../../libs/styles/palette";
 import { Link } from "react-router-dom";
 import Tags from "../common/Tags";
 import Responsive from "../../libs/common/Responsive";
+import PostActionButton from "./PostActionButton";
 // import { postData } from "../../libs/data/postData";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SubInfoDiv = styled.div`
   ${(props) =>
@@ -43,10 +46,14 @@ const PostContentDiv = styled.div`
 
 const Post = ({ id, username, postData }) => {
   // console.log(postData);
-
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  console.log(postData);
   const post = postData.find((item) => item.id === Number(id));
-  console.log(post);
-
+  // console.log(post);
+  const onClick = () => {
+    navigate("/write");
+  };
   return (
     <PostDiv>
       <PostHeadDiv>
@@ -55,7 +62,7 @@ const Post = ({ id, username, postData }) => {
           <span>
             <b>
               <Link style={{ textDecoration: "none" }} to="/username">
-                {post && post.username}
+                {post && user.username}
               </Link>
             </b>
           </span>
@@ -63,7 +70,7 @@ const Post = ({ id, username, postData }) => {
         </SubInfoDiv>
         {post.tags && post.tags.map((tag) => <Tags tag={tag} />)}
       </PostHeadDiv>
-
+      <PostActionButton onClick={onClick} />
       <PostContentDiv
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       />

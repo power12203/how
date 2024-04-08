@@ -4,12 +4,7 @@ import palette from "../styles/palette";
 import { Link } from "react-router-dom";
 
 const SButton = css`
-  margin-left: 1rem;
   text-decoration: none;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-  height: 50px;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
@@ -25,8 +20,8 @@ const SButton = css`
   ${(props) =>
     props.fullWidth &&
     css`
-      padding-top: 0.75rem;
-      padding-bottom: 0.75.rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.6rem;
       width: 100%;
       font-size: 1.125rem;
     `}

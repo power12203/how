@@ -1,23 +1,21 @@
 import React from "react";
 import Post from "../components/post/Post";
-import PostActionButton from "../components/post/PostActionButton";
+// import PostActionButton from "../components/post/PostActionButton";
 import Header from "../libs/common/Header";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { postData } from "../libs/data/postData";
+import { useDispatch, useSelector } from "react-redux";
 
 const PostPage = () => {
   const { username, id } = useParams();
-  console.log(username, id);
+  const { postData } = useSelector((state) => state.write);
+  console.log(username, id, postData);
   return (
     <div>
       <Header />
       <Post username={username} id={id} postData={postData} />
-      <PostActionButton />
     </div>
   );
 };
 
-export default connect((state) => ({
-  postData: state.postList,
-}))(PostPage);
+export default PostPage;

@@ -4,6 +4,7 @@ import "quill/dist/quill.snow.css";
 import palette from "../../libs/styles/palette";
 import Responsive from "../../libs/common/Responsive";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 
 const WriteDiv = styled(Responsive)`
   padding-top: 5rem;
@@ -32,6 +33,9 @@ const QuillDiv = styled.div`
 `;
 const Write = (props) => {
   const { title, changeContent, onChange } = props;
+
+  const { post } = useSelector((state) => state.post);
+  console.log(post);
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
   useEffect(() => {
@@ -56,11 +60,11 @@ const Write = (props) => {
   }, []);
 
   const mounted = useRef(false);
-  //   useEffect(() => {
-  // if (mounted.current) return;
-  // mounted.current = true;
-  // quillInstance.current.root.innerHTML = body;
-  //   }, []);
+  useEffect(() => {
+    if (mounted.current) return;
+    mounted.current = true;
+    // quillInstance.current.root.innerHTML = update_current;
+  }, []);
   return (
     <WriteDiv>
       <TitleInput
