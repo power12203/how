@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import palette from "../../libs/styles/palette";
 import { Link } from "react-router-dom";
+import Button from "../../libs/common/Button";
 
 const PostActionDiv = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ const PostActionDiv = styled.div`
   margin-bottom: 2rem;
   margin-top: -1.5rem;
 `;
-const ActionButton = styled.button`
+const ActionButton = styled(Button)`
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   color: ${palette.Red[3]};
@@ -29,10 +30,12 @@ const ActionButton = styled.button`
 `;
 
 const PostActionButton = (props) => {
-  const { onClick } = props;
+  const { onClick, id } = props;
   return (
     <PostActionDiv>
-      <ActionButton onClick={onClick}>수정</ActionButton>
+      <ActionButton to={`/update/${id}`} onClick={onClick}>
+        수정
+      </ActionButton>
       <ActionButton>삭제</ActionButton>
     </PostActionDiv>
   );

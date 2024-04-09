@@ -7,6 +7,7 @@ import WritPage from "./pages/WritPage";
 import Header from "./libs/common/Header";
 import PostListPage from "./pages/PostListPage";
 import PostPage from "./pages/PostPage";
+import UpdatePage from "./pages/UpdatePage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<RegisterPage mode="register" />} />
         <Route path="/login" element={<LoginPage mode="login" />} />
         <Route path="/write" element={<WritPage />} />
+        <Route path="/update/:id" element={<UpdatePage />} />
         <Route path="/:username/:id" element={<PostPage />} />
       </Routes>
     </div>

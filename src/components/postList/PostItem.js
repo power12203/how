@@ -4,6 +4,7 @@ import palette from "../../libs/styles/palette";
 import { Link } from "react-router-dom";
 import Tags from "../common/Tags";
 import { useSelector } from "react-redux";
+import Button from "../../libs/common/Button";
 
 const PostItemDiv = styled.div`
   padding-top: 3rem;
@@ -43,8 +44,11 @@ const SubInfoDiv = styled.div`
 `;
 
 const PostItem = (props) => {
-  const { item } = props;
+  const { item, handleClick } = props;
   const { user } = useSelector((state) => state.auth);
+  // const onClick = (id) => {
+  //   console.log(id);
+  // };
   // console.log(item);
   return (
     <div>
@@ -52,7 +56,7 @@ const PostItem = (props) => {
         <h2 style={{ color: "black" }}>
           <Link
             style={{ textDecoration: "none", color: "black" }}
-            // onClick={() => onclick(item.id)}
+            onClick={() => handleClick(item.id)}
             to={`/${item.username}/${item.id}`}
           >
             {item.title}

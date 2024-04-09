@@ -8,8 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 const PostPage = () => {
   const { username, id } = useParams();
-  const { postData } = useSelector((state) => state.write);
-  console.log(username, id, postData);
+  const { postData, content } = useSelector((state) => state.write);
+  const postgat = postData.find((item) => item.id === Number(id));
+  console.log(postgat);
   return (
     <div>
       <Header />

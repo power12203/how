@@ -1,21 +1,30 @@
-import React, {
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import QuillEditor from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import palette from "../../libs/styles/palette";
-import Responsive from "../../libs/common/Responsive";
+import palette from "../libs/styles/palette";
+import Responsive from "../libs/common/Responsive";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import WriteActionButton from "./WriteActionButton";
-import Tag from "./Tag";
-import { post_data } from "../../modules/write";
+import Tag from "./write/Tag";
+import { post_edit } from "../modules/write";
+import Button from "../libs/common/Button";
+import { useParams, useNavigate } from "react-router-dom";
 
+const ActionButtonDiv = styled.div`
+  float: left;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  button + button {
+    margin-left: 0.5rem;
+  }
+`;
+const StyleButton = styled(Button)`
+  width: 100px;
+  height: 3.5;
+  & + & {
+    margin-left: 0.5rem;
+  }
+`;
 const WriteDiv = styled(Responsive)`
   padding-top: 5rem;
   padding-bottom: 5rem;
@@ -41,21 +50,27 @@ const QuillDiv = styled.div`
     left: 0px;
   }
 `;
-const Write = (props) => {
+const UpdatePage = (props) => {
   const [tags, setTags] = useState([]);
-  const [content, setContent] = useState("");
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { postData } = useSelector((state) => state.write);
+  // console.log(postData);
   // const { title, changeTitle, content, changeContent } = props;
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
-  const onPostData = (title, content, tags) =>
-    dispatch(post_data(title, content, tags));
+  const onEditData = (id, title, content, tags) =>
+    dispatch(post_edit(id, title, content, tags));
+  const postContent = postData.find((item) => item.id === Number(id));
+  const [content, setContent] = useState(postContent.content);
 
   // Editor ref
   const quill = useRef();
 
   // Handler to handle button clicked
   const Click = (e) => {
-    onPostData(title, content, tags);
+    onEditData(id, title, content, tags);
+    navigate("/");
   };
 
   const imageHandler = useCallback(() => {
@@ -137,7 +152,7 @@ const Write = (props) => {
       />
       <QuillDiv>
         <QuillEditor
-          ref={(el) => (quill.current = el)}
+          ref={(ko) => (quill.current = ko)}
           theme="snow"
           value={content}
           formats={formats}
@@ -146,9 +161,12 @@ const Write = (props) => {
         />
       </QuillDiv>
       <Tag tags={tags} setTags={setTags} />
-      <WriteActionButton onClick={Click}>Submit</WriteActionButton>
+      <ActionButtonDiv>
+        <Button onClick={Click}>수정</Button>
+        <StyleButton>취소</StyleButton>
+      </ActionButtonDiv>
     </WriteDiv>
   );
 };
 
-export default Write;
+export default UpdatePage;

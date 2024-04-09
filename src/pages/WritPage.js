@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Write from "../components/write/Write";
 import Responsive from "../libs/common/Responsive";
 import Tag from "../components/write/Tag";
 import WriteActionButton from "../components/write/WriteActionButton";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useParams } from "react-router-dom";
 import {
   post_data,
   initialize,
@@ -15,31 +15,21 @@ import {
 import Header from "../libs/common/Header";
 
 const WritPage = () => {
-  const { id, title, content, tags } = useSelector((state) => ({
-    id: state.auth.status,
+  const { status, title, content, tags } = useSelector((state) => ({
+    status: state.auth.status,
     title: state.write.title,
     content: state.write.content,
     tags: state.write.tags,
   }));
+
   const dispatch = useDispatch();
-  const postData = (id, title, content, tags) =>
-    dispatch(post_data(id, title, content, tags));
-  const initial = () => dispatch(initialize());
-  console.log(initial);
+  // const postData = (id, title, content, tags) =>
+  //   dispatch(post_data(id, title, content, tags));
+  // const initial = () => dispatch(initialize());
   const changeContent = (content) => dispatch(change_content(content));
   const changeTitle = (title) => dispatch(change_title(title));
   const changeTags = (tags) => dispatch(change_tags(tags));
-  const onChange = (e) => {
-    changeTitle(e.target.value);
-  };
-  const onClick = (e) => {
-    postData(id, title, content, tags);
-  };
-  useEffect(() => {
-    return () => {
-      initial();
-    };
-  }, []);
+
   return (
     <>
       <Header />
@@ -47,12 +37,13 @@ const WritPage = () => {
         <Responsive>
           <h1>글 작성하기</h1>
           <Write
-            value={title}
+            title={title}
+            changeTitle={changeTitle}
+            content={content}
             changeContent={changeContent}
-            onChange={onChange}
+            changeTags={changeTags}
+            tags={tags}
           />
-          <Tag changeTags={changeTags} />
-          <WriteActionButton onClick={onClick} />
         </Responsive>
       </div>
     </>

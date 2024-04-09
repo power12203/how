@@ -2,13 +2,10 @@ import React from "react";
 
 import Responsive from "../../libs/common/Responsive";
 import styled, { css } from "styled-components";
-
+import { useNavigate } from "react-router-dom";
 import PostItem from "./PostItem";
 import Button from "../../libs/common/Button";
-import { postData } from "../../libs/data/postData";
-import { bring_post } from "../../modules/post";
 import { useDispatch } from "react-redux";
-import { auth } from "../../modules/auth";
 import { useSearchParams } from "react-router-dom";
 
 const PostListDiv = styled(Responsive)`
@@ -25,14 +22,16 @@ const WriteLinkDiv = styled.div`
 const PostList = (props) => {
   // const { id, username, title, content, tags } = data;
   const { auth, postData, bring_post, showItemNum, currentPosts } = props;
-  console.log(currentPosts);
+  // console.log(currentPosts);
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get("page"));
+  const navigate = useNavigate();
 
-  // console.log(id);
   const dispatch = useDispatch();
-  const onClick = (id) => {
-    const post = postData.filter((item) => item.id === id);
+
+  const handleClick = (id) => {
+    const post = currentPosts.filter((item) => item.id === id);
+
     dispatch(
       bring_post(
         post && post[0].id,
@@ -42,14 +41,15 @@ const PostList = (props) => {
         post && post[0].tags
       )
     );
-    if (!auth) {
-      return (
-        <PostListDiv>
-          <h1>로그인후 이용가능합니다.</h1>
-        </PostListDiv>
-      );
-    }
+    navigate(`/${post[0].username}/${post[0].id}`);
   };
+  // if (!auth) {
+  //   return (
+  //     <PostListDiv>
+  //       <h1>로그인후 이용가능합니다.</h1>
+  //     </PostListDiv>
+  //   );
+  // }
 
   return (
     <PostListDiv>
@@ -68,7 +68,7 @@ const PostList = (props) => {
       </WriteLinkDiv>
       {currentPosts &&
         currentPosts.map((item, idx) => (
-          <PostItem item={item} onClick={onClick} />
+          <PostItem item={item} handleClick={handleClick} />
         ))}
     </PostListDiv>
   );

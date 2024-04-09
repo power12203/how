@@ -8,6 +8,7 @@ import PostActionButton from "./PostActionButton";
 // import { postData } from "../../libs/data/postData";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Modal from "../../libs/common/Modal";
 
 const SubInfoDiv = styled.div`
   ${(props) =>
@@ -48,7 +49,7 @@ const Post = ({ id, username, postData }) => {
   // console.log(postData);
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  console.log(postData);
+  // console.log(postData);
   const post = postData.find((item) => item.id === Number(id));
   // console.log(post);
   const onClick = () => {
@@ -70,10 +71,11 @@ const Post = ({ id, username, postData }) => {
         </SubInfoDiv>
         {post.tags && post.tags.map((tag) => <Tags tag={tag} />)}
       </PostHeadDiv>
-      <PostActionButton onClick={onClick} />
+      <PostActionButton id={id} onClick={onClick} />
       <PostContentDiv
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       />
+      <Modal />
     </PostDiv>
   );
 };

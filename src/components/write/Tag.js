@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import palette from "../../libs/styles/palette";
 
@@ -51,9 +51,9 @@ const TagListUl = styled.ul`
 `;
 
 const Tag = (props) => {
-  const { onRemove, changeTags } = props;
+  const { setTags, tags } = props;
   const [tagInput, setTagInput] = useState("");
-  const [tags, setTags] = useState([]);
+  // const [tagsList, setTags] = useState([]);
 
   const handleInputChange = (e) => {
     setTagInput(e.target.value);
@@ -68,12 +68,15 @@ const Tag = (props) => {
       } else {
         const newTagList = [...tags, tagInput];
         setTags(newTagList);
-        changeTags(newTagList && newTagList);
+        // setTags(newTagList && newTagList);
       }
       setTagInput("");
     },
     [tags, tagInput]
   );
+  // useEffect(() => {
+  //   setTags(tags);
+  // }, [tags]);
 
   const handleDelete = (index) => {
     const newTags = [...tags];
@@ -92,7 +95,7 @@ const Tag = (props) => {
         />
         <button type="submit">추가</button>
       </TagForm>
-      <TagListUl onRemove={onRemove}>
+      <TagListUl>
         {tags &&
           tags.map((tag, index) => (
             <div

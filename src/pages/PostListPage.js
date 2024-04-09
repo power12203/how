@@ -4,11 +4,10 @@ import Header from "../libs/common/Header";
 import { bring_post } from "../modules/post";
 import { useSelector } from "react-redux";
 import Pagination from "../components/postList/Pagination";
-import { postData } from "../libs/data/postData";
 
 const PostListPage = () => {
   const [page, setPage] = useState(1);
-  const data = useSelector((state) => state.post);
+  const { postData } = useSelector((state) => state.write);
   // const []
 
   const handlePage = (pageNumber) => {
@@ -20,12 +19,11 @@ const PostListPage = () => {
     : [];
 
   // console.log(currentPosts, "power");
-  // console.log(postData, "12203");
+  console.log(postData, "12203");
   return (
     <div>
       <Header />
       <PostList
-        data={data}
         bring_post={bring_post}
         page={page}
         currentPosts={currentPosts}
